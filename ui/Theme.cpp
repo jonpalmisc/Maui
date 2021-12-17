@@ -1,4 +1,4 @@
-//===-- Theme.cpp - Theme and font utilities ------------------------------===//
+//===-- ui/Theme.cpp - Theme and font utilities ---------------------------===//
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //

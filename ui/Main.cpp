@@ -1,4 +1,4 @@
-//===-- Main.cpp - UI entry point -----------------------------------------===//
+//===-- ui/Main.cpp - UI entry point --------------------------------------===//
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //

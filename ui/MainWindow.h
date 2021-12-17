@@ -1,4 +1,4 @@
-//===-- MainWindow.h - Main window of the UI ------------------------------===//
+//===-- ui/MainWindow.h - Main window of the UI ---------------------------===//
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //
