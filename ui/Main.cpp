@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
     QPalette palette;
     palette.setColor(QPalette::Window, QColor("#CACACA"));
     palette.setColor(QPalette::WindowText, QColor("#2C2C2C"));
+    palette.setColor(QPalette::Text, QColor("#2C2C2C"));
     palette.setColor(QPalette::Disabled, QPalette::WindowText, QColor("#8E8E8E"));
 
     QApplication app(argc, argv);
