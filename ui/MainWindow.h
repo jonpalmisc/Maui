@@ -9,13 +9,28 @@
 
 #pragma once
 
+#include "Cell.h"
+
 #include <QMainWindow>
+#include <QVBoxLayout>
 
 /// Main application window.
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
+    unsigned m_lastId;
+
+    QList<Cell*> m_cells;
+    QVBoxLayout* m_rootLayout;
+
+    /// Create a new cell and place it at the bottom of the notebook.
+    void pushNewCell();
+
 public:
     MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+
+public Q_SLOTS:
+
+    /// Slot to signal that a cell has been evaluated.
+    void cellEvaluated(unsigned id);
 };

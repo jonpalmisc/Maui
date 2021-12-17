@@ -8,29 +8,35 @@
 //===----------------------------------------------------------------------===//
 
 #include "MainWindow.h"
-#include "Cell.h"
-
-#include <QVBoxLayout>
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
+    , m_lastId(0)
+    , m_rootLayout(new QVBoxLayout)
 {
     setWindowTitle("AMU");
 
     auto* root = new QWidget;
-    auto* rootLayout = new QVBoxLayout(root);
-    rootLayout->setSpacing(12);
-    rootLayout->setContentsMargins(24, 24, 24, 24);
+    root->setLayout(m_rootLayout);
+    m_rootLayout->setSpacing(12);
+    m_rootLayout->setContentsMargins(24, 24, 24, 24);
+    m_rootLayout->addStretch(1);
 
-    for (unsigned i = 0; i < 5; ++i) {
-        auto* cell = new Cell(i + 1);
-        rootLayout->addWidget(cell);
-    }
-    rootLayout->addStretch(1);
+    pushNewCell();
 
     setCentralWidget(root);
+    resize(600, 700);
 }
 
-MainWindow::~MainWindow()
+void MainWindow::pushNewCell()
 {
+    auto* cell = new Cell(this, ++m_lastId);
+    m_cells.append(cell);
+    m_rootLayout->insertWidget(m_rootLayout->count() - 1, cell);
+}
+
+void MainWindow::cellEvaluated(unsigned id)
+{
+    if (id == m_cells.last()->id())
+        pushNewCell();
 }

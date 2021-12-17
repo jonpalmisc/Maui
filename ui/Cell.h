@@ -10,24 +10,34 @@
 #pragma once
 
 #include <QLabel>
+#include <QLineEdit>
+
+class MainWindow;
 
 /// A notebook cell.
 class Cell : public QWidget {
     Q_OBJECT
 
+    MainWindow* m_mainWindow;
     unsigned m_id;
 
     QWidget* m_inputSubcell;
     QWidget* m_outputSubcell;
 
     QLabel* m_inputLabel;
-    QLabel* m_inputField;
+    QLineEdit* m_inputField;
 
     QLabel* m_outputLabel;
     QLabel* m_outputField;
 
 public:
-    Cell(unsigned id, QWidget* parent = nullptr);
+    Cell(MainWindow* mainWindow, unsigned id, QWidget* parent = nullptr);
+
+    /// Get the cell's ID.
+    unsigned id() const { return m_id; }
+
+    /// Evaluate the cell's current input
+    void evaluateCurrentInput();
 
     /// Show the output sub-cell.
     void showOutput();

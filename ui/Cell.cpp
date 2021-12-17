@@ -8,18 +8,20 @@
 //===----------------------------------------------------------------------===//
 
 #include "Cell.h"
+#include "MainWindow.h"
 #include "Theme.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
-Cell::Cell(unsigned id, QWidget* parent)
+Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     : QWidget(parent)
+    , m_mainWindow(mainWindow)
     , m_id(id)
     , m_inputSubcell(new QWidget)
     , m_outputSubcell(new QWidget)
     , m_inputLabel(new QLabel)
-    , m_inputField(new QLabel)
+    , m_inputField(new QLineEdit)
     , m_outputLabel(new QLabel)
     , m_outputField(new QLabel)
 {
@@ -69,6 +71,16 @@ Cell::Cell(unsigned id, QWidget* parent)
 
     // Hide the output cell initially.
     m_outputSubcell->setVisible(false);
+
+    connect(m_inputField, &QLineEdit::returnPressed, this, &Cell::evaluateCurrentInput);
+}
+
+void Cell::evaluateCurrentInput()
+{
+    m_outputField->setText("TODO");
+    showOutput();
+
+    m_mainWindow->cellEvaluated(m_id);
 }
 
 void Cell::showOutput()
