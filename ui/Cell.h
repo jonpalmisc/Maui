@@ -28,4 +28,7 @@ class Cell : public QWidget {
 
 public:
     Cell(unsigned id, QWidget* parent = nullptr);
+
+    /// Show the output sub-cell.
+    void showOutput();
 };

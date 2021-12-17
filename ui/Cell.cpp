@@ -66,4 +66,12 @@ Cell::Cell(unsigned id, QWidget* parent)
     rootLayout->setSpacing(0);
     rootLayout->addWidget(m_inputSubcell);
     rootLayout->addWidget(m_outputSubcell);
+
+    // Hide the output cell initially.
+    m_outputSubcell->setVisible(false);
+}
+
+void Cell::showOutput()
+{
+    m_outputSubcell->setVisible(true);
 }
