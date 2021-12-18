@@ -17,6 +17,8 @@ namespace amu {
 Engine::Engine()
     : m_env(nullptr)
     , m_link(nullptr)
+    , m_lastOutputId(0)
+    , m_nextInputId(1)
 {
 }
 
@@ -54,7 +56,7 @@ void Engine::deinit()
     WSDeinitialize(m_env);
 }
 
-std::string Engine::eval(const std::string& input) const
+std::string Engine::eval(const std::string& input)
 {
     WSPutFunction(m_link, "EnterTextPacket", 1);
     WSPutString(m_link, input.c_str());
@@ -75,10 +77,22 @@ std::string Engine::eval(const std::string& input) const
 
             break;
 
+        case OUTPUTNAMEPKT:
+            if (WSGetString(m_link, &rawResult)) {
+                m_lastOutputId = extractId(rawResult);
+                WSReleaseString(m_link, rawResult);
+            }
+
+            break;
+
         // These types of packets can effectively be treated as a signal that
         // this communication cycle is over. There will be no more packets to
         // handle after one of these is recieved.
         case INPUTNAMEPKT:
+            if (WSGetString(m_link, &rawResult)) {
+                m_nextInputId = extractId(rawResult);
+                WSReleaseString(m_link, rawResult);
+            }
         case INPUTPKT:
         case SUSPENDPKT:
             done = true;
@@ -98,8 +112,6 @@ std::string Engine::eval(const std::string& input) const
         // now they should all be logged for development purposes.
         default:
             std::cerr << "Warning: Unhandled type " << packet << " packet\n";
-
-            WSNewPacket(m_link);
             break;
         }
 

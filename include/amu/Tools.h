@@ -19,4 +19,9 @@ namespace amu {
 /// \param input The escaped string to unescape
 std::string octalUnescape(const std::string& input);
 
+/// Extract the ID from a formatted input/output name.
+///
+/// \param name The formatted name to parse
+int extractId(const char* name);
+
 }

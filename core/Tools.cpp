@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <amu/Tools.h>
+#include <string>
 
 namespace amu {
 
@@ -29,6 +30,21 @@ std::string octalUnescape(const std::string& input)
     }
 
     return result;
+}
+
+int extractId(const char* name)
+{
+    std::string idString;
+
+    auto c = name;
+    while (*c != 0) {
+        if (*c >= 0x30 && *c <= 0x39)
+            idString += c;
+
+        ++c;
+    }
+
+    return std::stoi(idString);
 }
 
 }

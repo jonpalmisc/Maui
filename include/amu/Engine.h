@@ -28,6 +28,8 @@ class Engine {
     WSLINK m_link;
 
     bool m_isInitialized;
+    int m_lastOutputId;
+    int m_nextInputId;
 
 public:
     Engine();
@@ -43,7 +45,13 @@ public:
     /// Evaluate the given input with the engine.
     ///
     /// \param input The input (Wolfram Language) to evaluate
-    std::string eval(const std::string& input) const;
+    std::string eval(const std::string& input);
+
+    /// Get the last output cell ID returned from the engine.
+    int lastOutputId() const { return m_lastOutputId; }
+
+    /// Get the ID for the next input cell (as instructed by the engine).
+    int nextInputId() const { return m_nextInputId; }
 };
 
 }
