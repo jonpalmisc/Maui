@@ -9,6 +9,8 @@
 
 #include <amu/Engine.h>
 
+#include <iostream>
+
 namespace amu {
 
 Engine::Engine()
@@ -32,6 +34,11 @@ Error Engine::init(const std::string& kernelPath)
         return Error::BadLink;
     }
 
+    // Recieve and ignore the first input name packet. This "aligns" the packet
+    // cycle so that `eval` works smoothly.
+    WSNextPacket(m_link);
+    WSNewPacket(m_link);
+
     m_isInitialized = true;
     return Error::None;
 }
@@ -48,25 +55,58 @@ void Engine::deinit()
 
 std::string Engine::eval(const std::string& input) const
 {
-    int resultSize, _;
-    const unsigned char* resultBytes;
-
-    WSPutFunction(m_link, "EvaluatePacket", 1);
-    WSPutFunction(m_link, "ToString", 1);
-    WSPutFunction(m_link, "ToExpression", 1);
+    WSPutFunction(m_link, "EnterTextPacket", 1);
     WSPutString(m_link, input.c_str());
     WSEndPacket(m_link);
 
-    // Wait for return packet.
-    while (WSNextPacket(m_link) != RETURNPKT)
+    int packet;
+    const char* rawResult;
+    std::string result;
+
+    bool done = false;
+    while (!done) {
+        switch (packet = WSNextPacket(m_link)) {
+        case RETURNTEXTPKT:
+
+            // TODO: Unescape output!
+            if (WSGetString(m_link, &rawResult)) {
+                result = std::string(rawResult);
+                WSReleaseString(m_link, rawResult);
+            }
+
+            break;
+
+        // These types of packets can effectively be treated as a signal that
+        // this communication cycle is over. There will be no more packets to
+        // handle after one of these is recieved.
+        case INPUTNAMEPKT:
+        case INPUTPKT:
+        case SUSPENDPKT:
+            done = true;
+            break;
+
+        // Not sure what produces illegal packets, but maybe their existence
+        // should be logged if one is recieved.
+        case ILLEGALPKT:
+            std::cerr << "Warning: Recieved illegal packet\n";
+
+            if (!WSClearError(m_link) || !WSNewPacket(m_link))
+                done = true;
+
+            break;
+
+        // There are a handful of packets that can be safely ignored, but for
+        // now they should all be logged for development purposes.
+        default:
+            std::cerr << "Warning: Unhandled type " << packet << " packet\n";
+
+            WSNewPacket(m_link);
+            break;
+        }
+
         WSNewPacket(m_link);
+    }
 
-    // Get the result buffer and create a C++ string from it.
-    WSGetUTF8String(m_link, &resultBytes, &resultSize, &_);
-    std::string result(resultBytes, resultBytes + resultSize);
-
-    // Free the raw buffer and return the C++ string.
-    WSReleaseUTF8String(m_link, resultBytes, resultSize);
     return result;
 }
 
