@@ -11,7 +11,11 @@
 #include "MainWindow.h"
 #include "Theme.h"
 
+#include <QClipboard>
+#include <QGuiApplication>
 #include <QHBoxLayout>
+#include <QMenu>
+#include <QToolButton>
 #include <QVBoxLayout>
 
 Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
@@ -52,11 +56,33 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
         return layout;
     };
 
-    // Create the sub-cell layouts.
+    // Create actions to copy the cell input and output content.
+    auto* copyInputAction = new QAction("Copy Input");
+    auto* copyOutputAction = new QAction("Copy Output");
+    connect(copyInputAction, &QAction::triggered, [this] {
+        QGuiApplication::clipboard()->setText(m_inputField->text());
+    });
+    connect(copyOutputAction, &QAction::triggered, [this] {
+        QGuiApplication::clipboard()->setText(m_outputField->text());
+    });
+
+    // Create a tool button with a menu of actions.
+    auto* actionsButton = new QToolButton;
+    auto* actionsMenu = new QMenu;
+    actionsMenu->addAction(copyInputAction);
+    actionsMenu->addAction(copyOutputAction);
+    actionsButton->setText("...");
+    actionsButton->setMenu(actionsMenu);
+    actionsButton->setPopupMode(QToolButton::InstantPopup);
+
+    // Create the subcell layouts.
     auto* inputLayout = makeSubcellLayout(m_inputLabel, m_inputField);
     auto* outputLayout = makeSubcellLayout(m_outputLabel, m_outputField);
 
-    // Apply the sub-cell layouts and stylesheets.
+    // Add the tool button to the input subcell.
+    inputLayout->addWidget(actionsButton);
+
+    // Apply the subcell layouts and stylesheets.
     m_inputSubcell->setStyleSheet(
         QString("QWidget { background: %1; }")
             .arg(Theme::color(Theme::Color::MidgroundLight).name()));
