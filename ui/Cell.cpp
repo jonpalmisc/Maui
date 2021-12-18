@@ -39,10 +39,6 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     m_inputLabel->setText(QString(" In[%1] := ").arg(m_id));
     m_outputLabel->setText(QString("Out[%1] := ").arg(m_id));
 
-    // Add placeholder content to the cell fields.
-    m_inputField->setText("Solve[2 300*^-9 == 1/2 l/1.33, l]");
-    m_outputField->setText("{{l -> 1.596 10*-6}}");
-
     // Shorthand for creating subcell layouts.
     auto makeSubcellLayout = [](QWidget* label, QWidget* field) {
         auto* layout = new QHBoxLayout;
