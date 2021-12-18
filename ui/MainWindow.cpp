@@ -11,9 +11,6 @@
 
 #include <QScrollArea>
 
-// TODO: Remove hardcoding.
-constexpr auto kKernelPath = "/Applications/Wolfram\\ Engine.app/Contents/Resources/Wolfram\\ Player.app/Contents/MacOS/WolframKernel -mathlink";
-
 MainWindow::MainWindow(const QString& kernelPath, QWidget* parent)
     : QMainWindow(parent)
     , m_rootLayout(new QVBoxLayout)
