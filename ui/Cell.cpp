@@ -31,6 +31,10 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     m_outputLabel->setFont(Theme::monoFont());
     m_outputField->setFont(Theme::monoFont());
 
+    // Allow selection of the output field text.
+    m_outputField->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    m_outputField->setCursor(QCursor(Qt::IBeamCursor));
+
     // Disable the cell labels so they have a lighter text color.
     m_inputLabel->setEnabled(false);
     m_outputLabel->setEnabled(false);
