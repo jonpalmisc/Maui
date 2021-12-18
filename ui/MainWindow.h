@@ -11,6 +11,8 @@
 
 #include "Cell.h"
 
+#include <amu/Engine.h>
+
 #include <QMainWindow>
 #include <QVBoxLayout>
 
@@ -20,6 +22,8 @@ class MainWindow : public QMainWindow {
 
     unsigned m_lastId;
 
+    amu::Engine m_engine;
+
     QList<Cell*> m_cells;
     QVBoxLayout* m_rootLayout;
 
@@ -28,6 +32,12 @@ class MainWindow : public QMainWindow {
 
 public:
     MainWindow(QWidget* parent = nullptr);
+    ~MainWindow();
+
+    /// Evaluate a string under the connected engine.
+    ///
+    /// \param input The input (Wolfram Language) to evaluate
+    QString engineEval(const QString& input) const;
 
 public Q_SLOTS:
 

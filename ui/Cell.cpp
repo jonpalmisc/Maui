@@ -77,13 +77,9 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
 
 void Cell::evaluateCurrentInput()
 {
-    m_outputField->setText("TODO");
-    showOutput();
+    auto output = m_mainWindow->engineEval(m_inputField->text());
+    m_outputField->setText(output);
 
-    m_mainWindow->cellEvaluated(m_id);
-}
-
-void Cell::showOutput()
-{
     m_outputSubcell->setVisible(true);
+    m_mainWindow->cellEvaluated(m_id);
 }

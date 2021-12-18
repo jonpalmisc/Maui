@@ -9,23 +9,35 @@
 
 #include "MainWindow.h"
 
+// TODO: Remove hardcoding.
+constexpr auto kKernelPath = "/Applications/Wolfram\\ Engine.app/Contents/Resources/Wolfram\\ Player.app/Contents/MacOS/WolframKernel -mathlink";
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_lastId(0)
     , m_rootLayout(new QVBoxLayout)
 {
-    setWindowTitle("AMU");
-
     auto* root = new QWidget;
     root->setLayout(m_rootLayout);
     m_rootLayout->setSpacing(12);
     m_rootLayout->setContentsMargins(24, 24, 24, 24);
     m_rootLayout->addStretch(1);
 
-    pushNewCell();
+    // Attempt to initialize the engine, initialize the UI based on the result.
+    auto error = m_engine.init(kKernelPath);
+    if (error == amu::Error::None)
+        pushNewCell();
+    else
+        m_rootLayout->addWidget(new QLabel("Failed to initialize engine."));
 
+    setWindowTitle("AMU");
     setCentralWidget(root);
     resize(600, 700);
+}
+
+MainWindow::~MainWindow()
+{
+    m_engine.deinit();
 }
 
 void MainWindow::pushNewCell()
@@ -33,6 +45,11 @@ void MainWindow::pushNewCell()
     auto* cell = new Cell(this, ++m_lastId);
     m_cells.append(cell);
     m_rootLayout->insertWidget(m_rootLayout->count() - 1, cell);
+}
+
+QString MainWindow::engineEval(const QString& input) const
+{
+    return QString::fromStdString(m_engine.eval(input.toStdString()));
 }
 
 void MainWindow::cellEvaluated(unsigned id)

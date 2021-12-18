@@ -38,7 +38,4 @@ public:
 
     /// Evaluate the cell's current input
     void evaluateCurrentInput();
-
-    /// Show the output sub-cell.
-    void showOutput();
 };
