@@ -9,6 +9,8 @@
 
 #include "MainWindow.h"
 
+#include <QScrollArea>
+
 // TODO: Remove hardcoding.
 constexpr auto kKernelPath = "/Applications/Wolfram\\ Engine.app/Contents/Resources/Wolfram\\ Player.app/Contents/MacOS/WolframKernel -mathlink";
 
@@ -20,7 +22,7 @@ MainWindow::MainWindow(QWidget* parent)
     auto* root = new QWidget;
     root->setLayout(m_rootLayout);
     m_rootLayout->setSpacing(12);
-    m_rootLayout->setContentsMargins(24, 24, 24, 24);
+    m_rootLayout->setContentsMargins(12, 12, 12, 12);
     m_rootLayout->addStretch(1);
 
     // Attempt to initialize the engine, initialize the UI based on the result.
@@ -30,8 +32,12 @@ MainWindow::MainWindow(QWidget* parent)
     else
         m_rootLayout->addWidget(new QLabel("Failed to initialize engine."));
 
+    auto* scrollArea = new QScrollArea;
+    scrollArea->setWidget(root);
+    scrollArea->setWidgetResizable(true);
+
     setWindowTitle("AMU");
-    setCentralWidget(root);
+    setCentralWidget(scrollArea);
     resize(600, 700);
 }
 
