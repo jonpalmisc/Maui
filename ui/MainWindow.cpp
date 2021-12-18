@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget* parent)
     scrollArea->setWidget(root);
     scrollArea->setWidgetResizable(true);
 
-    setWindowTitle("AMU");
+    setWindowTitle("Amu");
     setCentralWidget(scrollArea);
     resize(600, 700);
 }
