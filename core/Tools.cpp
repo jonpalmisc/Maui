@@ -11,9 +11,24 @@
 
 namespace amu {
 
-std::string unescape(const std::string& input)
+std::string octalUnescape(const std::string& input)
 {
-    return input;
+    std::string result;
+
+    // This is super sketchy and fragile but it's good enough for now.
+    for (auto pos = input.begin(), end = input.end(); pos < end; ++pos) {
+        if (*pos == '\\') {
+            std::string octalSequence(pos + 1, pos + 4);
+            result += (char)std::stoi(octalSequence, 0, 8);
+
+            pos += 3;
+            continue;
+        }
+
+        result += *pos;
+    }
+
+    return result;
 }
 
 }

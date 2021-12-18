@@ -106,7 +106,7 @@ std::string Engine::eval(const std::string& input) const
         WSNewPacket(m_link);
     }
 
-    return unescape(result);
+    return octalUnescape(result);
 }
 
 }

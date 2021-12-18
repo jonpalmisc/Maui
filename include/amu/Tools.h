@@ -13,9 +13,10 @@
 
 namespace amu {
 
-/// Unescape a string. Frequently needed to process WSTP (return) text packets.
+/// Unescape a string with octal escape sequences. Frequently needed to process
+//  WSTP (return) text packets.
 ///
 /// \param input The escaped string to unescape
-std::string unescape(const std::string& input);
+std::string octalUnescape(const std::string& input);
 
 }
