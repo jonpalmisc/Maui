@@ -29,7 +29,7 @@ class MainWindow : public QMainWindow {
     void pushNewCell();
 
 public:
-    MainWindow(QWidget* parent = nullptr);
+    MainWindow(const QString& kernelPath, QWidget* parent = nullptr);
     ~MainWindow();
 
     /// Get a handle to the connected engine.

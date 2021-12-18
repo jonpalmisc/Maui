@@ -14,7 +14,7 @@
 // TODO: Remove hardcoding.
 constexpr auto kKernelPath = "/Applications/Wolfram\\ Engine.app/Contents/Resources/Wolfram\\ Player.app/Contents/MacOS/WolframKernel -mathlink";
 
-MainWindow::MainWindow(QWidget* parent)
+MainWindow::MainWindow(const QString& kernelPath, QWidget* parent)
     : QMainWindow(parent)
     , m_rootLayout(new QVBoxLayout)
 {
@@ -25,7 +25,7 @@ MainWindow::MainWindow(QWidget* parent)
     m_rootLayout->addStretch(1);
 
     // Attempt to initialize the engine, initialize the UI based on the result.
-    auto error = m_engine.init(kKernelPath);
+    auto error = m_engine.init(kernelPath.toStdString());
     if (error == amu::Error::None)
         pushNewCell();
     else

@@ -41,9 +41,11 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 set(AMU_SOURCES
   ui/Cell.h
   ui/Cell.cpp
+  ui/ConfigDialog.h
+  ui/ConfigDialog.cpp
   ui/Main.cpp
-  ui/MainWindow.cpp
   ui/MainWindow.h
+  ui/MainWindow.cpp  
   ui/Theme.h
   ui/Theme.cpp
 )
