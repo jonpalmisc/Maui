@@ -25,7 +25,7 @@ QColor Theme::color(Theme::Color color)
     case Color::Text:
         return QColor("#2C2C2C");
     case Color::TextSecondary:
-        return QColor("#6E6E6E");
+        return QColor("#8E8E8E");
     case Color::Selection:
         return QColor("#C9DFFA");
     case Color::Accent:
