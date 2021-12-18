@@ -59,6 +59,7 @@ QMenu {
 }
 
 QMenu::item {
+  background: %1;
 }
 
 QMenu::separator {
@@ -71,11 +72,17 @@ QMenu::item:selected {
 }
 
 QMenu::item:disabled {
-  color: %1;
+  color: %2;
+}
+
+QToolButton::menu-indicator {
+  image: none;
 }
 )";
 
-    return QString(base).arg(color(Color::TextSecondary).name());
+    return QString(base)
+        .arg(color(Color::MidgroundLight).name())
+        .arg(color(Color::TextSecondary).name());
 }
 
 const QFont& Theme::sansFont()
