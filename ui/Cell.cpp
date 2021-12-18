@@ -43,6 +43,7 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     auto makeSubcellLayout = [](QWidget* label, QWidget* field) {
         auto* layout = new QHBoxLayout;
         layout->setContentsMargins(12, 12, 12, 12);
+        layout->setSpacing(2);
         layout->addWidget(label);
         layout->addWidget(field, 1);
 
@@ -65,6 +66,7 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
 
     // Place everything into the root layout.
     auto* rootLayout = new QVBoxLayout(this);
+    rootLayout->setContentsMargins(0, 0, 0, 0);
     rootLayout->setSpacing(0);
     rootLayout->addWidget(m_inputSubcell);
     rootLayout->addWidget(m_outputSubcell);
