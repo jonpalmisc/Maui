@@ -2,8 +2,8 @@
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //
-// This file is part of AMU, an open source UI for the Wolfram Engine. The
-// source code for AMU is available at <https://github.com/jonpalmisc/amu>.
+// This file is part of Maui, an open source UI for the Wolfram Engine. The
+// source code for Maui is available at <https://github.com/jonpalmisc/Maui>.
 //
 //===----------------------------------------------------------------------===//
 
@@ -23,7 +23,7 @@ MainWindow::MainWindow(const QString& kernelPath, QWidget* parent)
 
     // Attempt to initialize the engine, initialize the UI based on the result.
     auto error = m_engine.init(kernelPath.toStdString());
-    if (error == amu::Error::None)
+    if (error == maui::Error::None)
         pushNewCell();
     else
         m_rootLayout->addWidget(new QLabel("Failed to initialize engine."));
@@ -32,7 +32,7 @@ MainWindow::MainWindow(const QString& kernelPath, QWidget* parent)
     scrollArea->setWidget(root);
     scrollArea->setWidgetResizable(true);
 
-    setWindowTitle("Amu");
+    setWindowTitle("Maui");
     setCentralWidget(scrollArea);
     resize(600, 700);
 }
@@ -50,7 +50,7 @@ void MainWindow::pushNewCell()
     m_rootLayout->insertWidget(m_rootLayout->count() - 1, cell);
 }
 
-amu::Engine* MainWindow::engine()
+maui::Engine* MainWindow::engine()
 {
     return &m_engine;
 }

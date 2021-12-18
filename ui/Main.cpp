@@ -2,8 +2,8 @@
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //
-// This file is part of AMU, an open source UI for the Wolfram Engine. The
-// source code for AMU is available at <https://github.com/jonpalmisc/amu>.
+// This file is part of Maui, an open source UI for the Wolfram Engine. The
+// source code for Maui is available at <https://github.com/jonpalmisc/Maui>.
 //
 //===----------------------------------------------------------------------===//
 
@@ -19,7 +19,7 @@
 int main(int argc, char* argv[])
 {
     QCoreApplication::setOrganizationDomain("com.jonpalmisc");
-    QCoreApplication::setApplicationName("Amu");
+    QCoreApplication::setApplicationName("Maui");
 
     QApplication app(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));

@@ -2,8 +2,8 @@
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //
-// This file is part of AMU, an open source UI for the Wolfram Engine. The
-// source code for AMU is available at <https://github.com/jonpalmisc/amu>.
+// This file is part of Maui, an open source UI for the Wolfram Engine. The
+// source code for Maui is available at <https://github.com/jonpalmisc/Maui>.
 //
 //===----------------------------------------------------------------------===//
 
@@ -11,7 +11,7 @@
 
 #include "Cell.h"
 
-#include <amu/Engine.h>
+#include <maui/Engine.h>
 
 #include <QMainWindow>
 #include <QVBoxLayout>
@@ -20,7 +20,7 @@
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-    amu::Engine m_engine;
+    maui::Engine m_engine;
 
     QList<Cell*> m_cells;
     QVBoxLayout* m_rootLayout;
@@ -33,7 +33,7 @@ public:
     ~MainWindow();
 
     /// Get a handle to the connected engine.
-    amu::Engine* engine();
+    maui::Engine* engine();
 
 public Q_SLOTS:
 

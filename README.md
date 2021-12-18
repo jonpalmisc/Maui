@@ -1,17 +1,17 @@
-# Amu
+# Maui
 
-Amu is an open source desktop application providing a user interface for the
+Maui is an open source desktop application providing a user interface for the
 free [Wolfram Engine](https://www.wolfram.com/engine/).
 
 ## Building
 
-Amu has two main dependencies: [Qt](https://www.qt.io/product/qt6) and the WSTP
-C API. Both are required to build and run Amu. The WSTP C API is included with
+Maui has two main dependencies: [Qt](https://www.qt.io/product/qt6) and the WSTP
+C API. Both are required to build and run Maui. The WSTP C API is included with
 the [Wolfram Engine](https://www.wolfram.com/engine/) which is free for
 personal use.
 
 With both of these dependencies installed, simply use CMake to generate the
-appropriate build environment, then build Amu:
+appropriate build environment, then build Maui:
 
 ```sh
 cmake -S . -B build -DWSTP_API_PATH="..." # -GNinja

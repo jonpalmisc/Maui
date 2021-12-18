@@ -2,17 +2,17 @@
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //
-// This file is part of AMU, an open source UI for the Wolfram Engine. The
-// source code for AMU is available at <https://github.com/jonpalmisc/amu>.
+// This file is part of Maui, an open source UI for the Wolfram Engine. The
+// source code for Maui is available at <https://github.com/jonpalmisc/Maui>.
 //
 //===----------------------------------------------------------------------===//
 
-#include <amu/Engine.h>
-#include <amu/Tools.h>
+#include <maui/Engine.h>
+#include <maui/Tools.h>
 
 #include <iostream>
 
-namespace amu {
+namespace maui {
 
 Engine::Engine()
     : m_env(nullptr)
@@ -30,7 +30,7 @@ Error Engine::init(const std::string& kernelPath)
     }
 
     int error = 0;
-    const char* args[] = { "Amu", "-linkname", kernelPath.c_str(), "-linkmode", "launch" };
+    const char* args[] = { "Maui", "-linkname", kernelPath.c_str(), "-linkmode", "launch" };
     m_link = WSOpenArgcArgv(m_env, 5, (char**)args, &error);
     if (!m_link) {
         WSDeinitialize(m_env);

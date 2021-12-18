@@ -1,9 +1,9 @@
-//===-- include/amu/Tools.h - Utilities for working with WSTP -------------===//
+//===-- include/Maui/Tools.h - Utilities for working with WSTP -------------===//
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //
-// This file is part of AMU, an open source UI for the Wolfram Engine. The
-// source code for AMU is available at <https://github.com/jonpalmisc/amu>.
+// This file is part of Maui, an open source UI for the Wolfram Engine. The
+// source code for Maui is available at <https://github.com/jonpalmisc/Maui>.
 //
 //===----------------------------------------------------------------------===//
 
@@ -11,7 +11,7 @@
 
 #include <string>
 
-namespace amu {
+namespace maui {
 
 /// Unescape a string with octal escape sequences. Frequently needed to process
 //  WSTP (return) text packets.
