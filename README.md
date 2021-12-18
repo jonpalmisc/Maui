@@ -21,6 +21,12 @@ cmake --build build
 If the WSTP headers and libraries are already in your system paths (which is
 unlikely), then passing the `-DWSTP_API_PATH` option to CMake is not needed.
 
+## Contributing
+
+Contributions are welcome! All code is formatted with `clang-format` using the
+built-in "WebKit" preset; please ensure your code is formatted when submitting
+a pull request.
+
 ## License
 
 Copyright &copy; 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
