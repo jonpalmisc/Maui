@@ -3,6 +3,11 @@
 Maui is an open source desktop application providing a user interface for the
 free [Wolfram Engine](https://www.wolfram.com/engine/).
 
+<div align="center">
+  <img src="docs/ui.png" width="512">
+  <br/>
+</div>
+
 ## Building
 
 Maui has two main dependencies: [Qt](https://www.qt.io/product/qt6) and the WSTP
