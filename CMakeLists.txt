@@ -14,7 +14,9 @@ endif()
 
 set(AMU_CORE_SOURCES
   include/amu/Engine.h
-  core/Engine.cpp)
+  include/amu/Tools.h
+  core/Engine.cpp
+  core/Tools.cpp)
 
 add_library(AmuCore ${AMU_CORE_SOURCES})
 target_include_directories(AmuCore PUBLIC include)

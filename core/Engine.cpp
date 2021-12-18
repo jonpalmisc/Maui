@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <amu/Engine.h>
+#include <amu/Tools.h>
 
 #include <iostream>
 
@@ -67,8 +68,6 @@ std::string Engine::eval(const std::string& input) const
     while (!done) {
         switch (packet = WSNextPacket(m_link)) {
         case RETURNTEXTPKT:
-
-            // TODO: Unescape output!
             if (WSGetString(m_link, &rawResult)) {
                 result = std::string(rawResult);
                 WSReleaseString(m_link, rawResult);
@@ -107,7 +106,7 @@ std::string Engine::eval(const std::string& input) const
         WSNewPacket(m_link);
     }
 
-    return result;
+    return unescape(result);
 }
 
 }
