@@ -54,9 +54,13 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     auto* outputLayout = makeSubcellLayout(m_outputLabel, m_outputField);
 
     // Apply the sub-cell layouts and stylesheets.
-    m_inputSubcell->setStyleSheet("QWidget { background: #FFFFFF; }");
+    m_inputSubcell->setStyleSheet(
+        QString("QWidget { background: %1; }")
+            .arg(Theme::color(Theme::Color::MidgroundLight).name()));
     m_inputSubcell->setLayout(inputLayout);
-    m_outputSubcell->setStyleSheet("QWidget { background: #F5F5F5; }");
+    m_outputSubcell->setStyleSheet(
+        QString("QWidget { background: %1; }")
+            .arg(Theme::color(Theme::Color::Midground).name()));
     m_outputSubcell->setLayout(outputLayout);
 
     // Place everything into the root layout.

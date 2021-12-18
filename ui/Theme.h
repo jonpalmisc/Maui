@@ -7,11 +7,30 @@
 //
 //===----------------------------------------------------------------------===//
 
+#include <QColor>
 #include <QFont>
+#include <QPalette>
 
 /// Central UI theming interface.
 class Theme {
 public:
+    /// A single color.
+    enum class Color {
+        Background,
+        Midground,
+        MidgroundLight,
+        Text,
+        TextSecondary,
+        Selection,
+        Accent,
+    };
+
+    /// Get the specified theme color.
+    static QColor color(Color color);
+
+    /// Get a `QPalette` using the theme colors.
+    static QPalette palette();
+
     /// Get the configured sans-serif font for the UI.
     static const QFont& sansFont();
 
