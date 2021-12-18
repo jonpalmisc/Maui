@@ -17,8 +17,8 @@ MainWindow::MainWindow(const QString& kernelPath, QWidget* parent)
 {
     auto* root = new QWidget;
     root->setLayout(m_rootLayout);
-    m_rootLayout->setSpacing(0);
-    m_rootLayout->setContentsMargins(0, 0, 0, 0);
+    m_rootLayout->setSpacing(12);
+    m_rootLayout->setContentsMargins(12, 12, 12, 12);
     m_rootLayout->addStretch(1);
 
     // Attempt to initialize the engine, initialize the UI based on the result.
@@ -32,6 +32,7 @@ MainWindow::MainWindow(const QString& kernelPath, QWidget* parent)
     scrollArea->setWidget(root);
     scrollArea->setWidgetResizable(true);
 
+    setContentsMargins(0, 0, 0, 0);
     setWindowTitle("Maui");
     setCentralWidget(scrollArea);
     resize(600, 700);
