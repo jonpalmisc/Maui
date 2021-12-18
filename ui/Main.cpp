@@ -18,8 +18,9 @@ int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));
-    app.setFont(Theme::sansFont());
     app.setPalette(Theme::palette());
+    app.setStyleSheet(Theme::stylesheet());
+    app.setFont(Theme::sansFont());
 
     MainWindow mainWindow;
     mainWindow.show();

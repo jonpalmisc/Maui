@@ -31,6 +31,9 @@ public:
     /// Get a `QPalette` using the theme colors.
     static QPalette palette();
 
+    /// Get the application-wide stylesheet.
+    static QString stylesheet();
+
     /// Get the configured sans-serif font for the UI.
     static const QFont& sansFont();
 

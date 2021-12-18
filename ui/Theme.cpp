@@ -39,6 +39,7 @@ QPalette Theme::palette()
 
     QPalette p;
     p.setColor(P::Window, color(Color::Background));
+    p.setColor(P::Light, color(Color::Midground));
     p.setColor(P::WindowText, color(Color::Text));
     p.setColor(P::Text, color(Color::Text));
     p.setColor(P::Highlight, color(Color::Selection));
@@ -47,6 +48,34 @@ QPalette Theme::palette()
     p.setColor(P::Link, color(Color::Accent));
 
     return p;
+}
+
+QString Theme::stylesheet()
+{
+    auto base = R"(
+QMenu {
+  background: palette(window);
+  border: 1px solid palette(light);
+}
+
+QMenu::item {
+}
+
+QMenu::separator {
+  background-color: palette(light);
+}
+
+QMenu::item:selected {
+  background-color: palette(link);
+  color: white;
+}
+
+QMenu::item:disabled {
+  color: %1;
+}
+)";
+
+    return QString(base).arg(color(Color::TextSecondary).name());
 }
 
 const QFont& Theme::sansFont()
