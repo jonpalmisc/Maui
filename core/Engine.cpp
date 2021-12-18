@@ -62,14 +62,14 @@ std::string Engine::eval(const std::string& input)
     WSPutString(m_link, input.c_str());
     WSEndPacket(m_link);
 
-    int packet;
+    PacketType packetType;
     const char* rawResult;
     std::string result;
 
     bool done = false;
     while (!done) {
-        switch (packet = WSNextPacket(m_link)) {
-        case RETURNTEXTPKT:
+        switch (packetType = (PacketType)WSNextPacket(m_link)) {
+        case PacketType::ReturnText:
             if (WSGetString(m_link, &rawResult)) {
                 result = std::string(rawResult);
                 WSReleaseString(m_link, rawResult);
@@ -77,7 +77,7 @@ std::string Engine::eval(const std::string& input)
 
             break;
 
-        case OUTPUTNAMEPKT:
+        case PacketType::OutputName:
             if (WSGetString(m_link, &rawResult)) {
                 m_lastOutputId = extractId(rawResult);
                 WSReleaseString(m_link, rawResult);
@@ -88,19 +88,19 @@ std::string Engine::eval(const std::string& input)
         // These types of packets can effectively be treated as a signal that
         // this communication cycle is over. There will be no more packets to
         // handle after one of these is recieved.
-        case INPUTNAMEPKT:
+        case PacketType::InputName:
             if (WSGetString(m_link, &rawResult)) {
                 m_nextInputId = extractId(rawResult);
                 WSReleaseString(m_link, rawResult);
             }
-        case INPUTPKT:
-        case SUSPENDPKT:
+        case PacketType::Input:
+        case PacketType::Suspend:
             done = true;
             break;
 
         // Not sure what produces illegal packets, but maybe their existence
         // should be logged if one is recieved.
-        case ILLEGALPKT:
+        case PacketType::Illegal:
             std::cerr << "Warning: Recieved illegal packet\n";
 
             if (!WSClearError(m_link) || !WSNewPacket(m_link))
@@ -111,7 +111,7 @@ std::string Engine::eval(const std::string& input)
         // There are a handful of packets that can be safely ignored, but for
         // now they should all be logged for development purposes.
         default:
-            std::cerr << "Warning: Unhandled type " << packet << " packet\n";
+            std::cerr << "Warning: Unhandled type " << (int)packetType << " packet\n";
             break;
         }
 

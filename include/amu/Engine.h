@@ -22,6 +22,18 @@ enum class Error {
     BadLink,
 };
 
+/// C++ wrapper enum for packet type constants.
+enum class PacketType : int {
+    Illegal = ILLEGALPKT,
+    Suspend = SUSPENDPKT,
+
+    Input = INPUTPKT,
+    ReturnText = RETURNTEXTPKT,
+
+    InputName = INPUTNAMEPKT,
+    OutputName = OUTPUTNAMEPKT,
+};
+
 /// A wrapper over a Wolfram Engine link and environment.
 class Engine {
     WSENV m_env;
