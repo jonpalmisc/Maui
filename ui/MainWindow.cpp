@@ -16,7 +16,6 @@ constexpr auto kKernelPath = "/Applications/Wolfram\\ Engine.app/Contents/Resour
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
-    , m_lastId(0)
     , m_rootLayout(new QVBoxLayout)
 {
     auto* root = new QWidget;
@@ -48,14 +47,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::pushNewCell()
 {
-    auto* cell = new Cell(this, ++m_lastId);
+    auto* cell = new Cell(this);
+
     m_cells.append(cell);
     m_rootLayout->insertWidget(m_rootLayout->count() - 1, cell);
 }
 
-QString MainWindow::engineEval(const QString& input) const
+amu::Engine* MainWindow::engine()
 {
-    return QString::fromStdString(m_engine.eval(input.toStdString()));
+    return &m_engine;
 }
 
 void MainWindow::cellEvaluated(unsigned id)

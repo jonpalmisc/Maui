@@ -20,8 +20,6 @@
 class MainWindow : public QMainWindow {
     Q_OBJECT
 
-    unsigned m_lastId;
-
     amu::Engine m_engine;
 
     QList<Cell*> m_cells;
@@ -34,10 +32,8 @@ public:
     MainWindow(QWidget* parent = nullptr);
     ~MainWindow();
 
-    /// Evaluate a string under the connected engine.
-    ///
-    /// \param input The input (Wolfram Language) to evaluate
-    QString engineEval(const QString& input) const;
+    /// Get a handle to the connected engine.
+    amu::Engine* engine();
 
 public Q_SLOTS:
 

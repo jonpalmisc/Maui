@@ -31,10 +31,13 @@ class Cell : public QWidget {
     QLabel* m_outputField;
 
 public:
-    Cell(MainWindow* mainWindow, unsigned id, QWidget* parent = nullptr);
+    Cell(MainWindow* mainWindow, unsigned id = 0, QWidget* parent = nullptr);
 
     /// Get the cell's ID.
     unsigned id() const { return m_id; }
+
+    /// Set the cell's ID and update the input/output labels.
+    void setId(unsigned id);
 
     /// Evaluate the cell's current input
     void evaluateCurrentInput();

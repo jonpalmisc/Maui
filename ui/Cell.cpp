@@ -17,7 +17,6 @@
 Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     : QWidget(parent)
     , m_mainWindow(mainWindow)
-    , m_id(id)
     , m_inputSubcell(new QWidget)
     , m_outputSubcell(new QWidget)
     , m_inputLabel(new QLabel)
@@ -39,9 +38,8 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     m_inputLabel->setEnabled(false);
     m_outputLabel->setEnabled(false);
 
-    // Format the input and output labels with the cell ID.
-    m_inputLabel->setText(QString(" In[%1] := ").arg(m_id));
-    m_outputLabel->setText(QString("Out[%1] := ").arg(m_id));
+    // Set the cell's ID and populate the input/output labels.
+    setId(id);
 
     // Shorthand for creating subcell layouts.
     auto makeSubcellLayout = [](QWidget* label, QWidget* field) {
@@ -81,10 +79,27 @@ Cell::Cell(MainWindow* mainWindow, unsigned id, QWidget* parent)
     connect(m_inputField, &QLineEdit::returnPressed, this, &Cell::evaluateCurrentInput);
 }
 
+void Cell::setId(unsigned int id)
+{
+    m_id = id;
+
+    // Zero is used as the "not yet assigned" ID.
+    if (m_id == 0)
+        m_inputLabel->setText("In[$] := ");
+    else
+        m_inputLabel->setText(QString("In[%1] := ").arg(m_id));
+
+    m_outputLabel->setText(QString("Out[%1] = ").arg(m_id));
+}
+
 void Cell::evaluateCurrentInput()
 {
-    auto output = m_mainWindow->engineEval(m_inputField->text());
-    m_outputField->setText(output);
+    auto engine = m_mainWindow->engine();
+
+    auto output = engine->eval(m_inputField->text().toStdString());
+    m_outputField->setText(QString::fromStdString(output));
+
+    setId(engine->lastOutputId());
 
     m_outputSubcell->setVisible(true);
     m_mainWindow->cellEvaluated(m_id);
