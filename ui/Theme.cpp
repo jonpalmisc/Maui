@@ -19,7 +19,7 @@ QColor Theme::color(Theme::Color color)
 {
     switch (color) {
     case Color::Background:
-        return QColor("#B3B3B3");
+        return QColor("#CACACA");
     case Color::Midground:
         return QColor("#EAEAEA");
     case Color::MidgroundLight:
