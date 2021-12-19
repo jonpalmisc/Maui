@@ -1,4 +1,4 @@
-//===-- core/Tools.h - Utilities for working with WSTP --------------------===//
+//===-- core/Tools.cpp - Utilities for working with WSTP ------------------===//
 //
 // Copyright (c) 2021 Jon Palmisciano; licensed under the BSD 3-Clause license.
 //
@@ -8,6 +8,7 @@
 //===----------------------------------------------------------------------===//
 
 #include <maui/Tools.h>
+
 #include <string>
 
 namespace maui {
