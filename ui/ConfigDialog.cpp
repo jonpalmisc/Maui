@@ -29,7 +29,7 @@ ConfigDialog::ConfigDialog(bool isAtStartup, QWidget* parent)
 
     // Create the save and quit buttons; only show the quit button if the
     // dialog was opened during the startup process.
-    auto* saveButton = new QPushButton("Save");
+    auto* saveButton = new QPushButton(isAtStartup ? "Launch" : "Save");
     auto* quitButton = new QPushButton("Quit");
     quitButton->setVisible(isAtStartup);
 
