@@ -56,3 +56,9 @@ qt_add_resources(Maui "fonts"
 target_link_libraries(Maui PRIVATE Qt${QT_VERSION_MAJOR}::Widgets MauiCore)
 target_compile_features(Maui PRIVATE cxx_std_17)
 qt_finalize_executable(Maui)
+
+# ===-- Formatting --------------------------------------------------------=== #
+
+add_custom_target(format
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  COMMAND clang-format -i --style=WebKit ${MAUI_CORE_SOURCES} ${MAUI_SOURCES})
