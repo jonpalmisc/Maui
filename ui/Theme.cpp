@@ -9,6 +9,8 @@
 
 #include "Theme.h"
 
+#include <QFontDatabase>
+
 QFont gMonoFont, gSansFont;
 bool gMonoFontInitialized = false;
 bool gSansFontInitialized = false;
@@ -88,6 +90,7 @@ QToolButton::menu-indicator {
 const QFont& Theme::sansFont()
 {
     if (!gSansFontInitialized) {
+        QFontDatabase::addApplicationFont(":ui/fonts/Ubuntu-Regular.ttf");
         gSansFont = QFont("Ubuntu", 13);
         gSansFontInitialized = true;
     }
@@ -98,6 +101,7 @@ const QFont& Theme::sansFont()
 const QFont& Theme::monoFont()
 {
     if (!gMonoFontInitialized) {
+        QFontDatabase::addApplicationFont(":ui/fonts/UbuntuMono-Regular.ttf");
         gMonoFont = QFont("Ubuntu Mono", 14);
         gMonoFontInitialized = true;
     }

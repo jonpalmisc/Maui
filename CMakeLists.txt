@@ -33,7 +33,6 @@ endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
 
 find_package(QT NAMES Qt6 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
@@ -51,6 +50,9 @@ set(MAUI_SOURCES
 )
 
 qt_add_executable(Maui MANUAL_FINALIZATION ${MAUI_SOURCES})
+qt_add_resources(Maui "fonts"
+  PREFIX "/"
+  FILES ui/fonts/Ubuntu-Regular.ttf ui/fonts/UbuntuMono-Regular.ttf)
 target_link_libraries(Maui PRIVATE Qt${QT_VERSION_MAJOR}::Widgets MauiCore)
 target_compile_features(Maui PRIVATE cxx_std_17)
 qt_finalize_executable(Maui)
