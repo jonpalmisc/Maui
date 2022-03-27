@@ -47,7 +47,7 @@ set(MAUI_SOURCES
   ui/ConfigDialog.cpp
   ui/Main.cpp
   ui/MainWindow.h
-  ui/MainWindow.cpp  
+  ui/MainWindow.cpp
   ui/Theme.h
   ui/Theme.cpp
 )
