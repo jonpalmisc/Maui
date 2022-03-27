@@ -100,19 +100,18 @@ std::string Engine::eval(const std::string& input)
 
         // Not sure what produces illegal packets, but maybe their existence
         // should be logged if one is received.
-		// Illegal packets are encountered when the engine is not activated
-        case PacketType::Illegal:
-		{
+        // Illegal packets are encountered when the engine is not activated
+        case PacketType::Illegal: {
             std::cerr << "Warning: Recieved illegal packet" << std::endl;
-			std::string error = WSErrorMessage(m_link);
-			if (!error.empty())
-				std::cerr << "Error: " << error << std::endl;
+            std::string error = WSErrorMessage(m_link);
+            if (!error.empty())
+                std::cerr << "Error: " << error << std::endl;
 
             if (!WSClearError(m_link) || !WSNewPacket(m_link))
                 done = true;
 
             break;
-		}
+        }
 
         // There are a handful of packets that can be safely ignored, but for
         // now they should all be logged for development purposes.
