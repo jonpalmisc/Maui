@@ -119,31 +119,36 @@ void Cell::setId(unsigned int id)
     m_outputLabel->setText(QString("Out[%1] = ").arg(m_id));
 }
 
+void Cell::renderGraphicsOutput()
+{
+    auto engine = m_mainWindow->engine();
+
+    QTemporaryFile file("XXXXXX.jpg");
+    file.setAutoRemove(true);
+    if (!file.open())
+        return;
+
+    // If the export succeeds, the returned text will be the path of the
+    // output image. This should be equivalent to the path we provided,
+    // although can be made more robust/reliable by making both paths
+    // absolute before comparison.
+    auto command = QString("Export[\"%1\", %]").arg(file.fileName());
+    auto renderOutput = engine->evalRaw(command.toStdString());
+    if (renderOutput == file.fileName().toStdString())
+        m_outputField->setPixmap(QPixmap(file.fileName()));
+    else
+        m_outputField->setText(QString::fromStdString(renderOutput));
+}
+
 void Cell::evaluateCurrentInput()
 {
     auto engine = m_mainWindow->engine();
 
     auto output = engine->eval(m_inputField->text().toStdString());
-    // test with Plot[Sin[x], {x, 0, Pi}]
-    if (output == "-Graphics-") {
-        QTemporaryFile file("XXXXXX.jpg");
-        file.setAutoRemove(true);
-        if (file.open()) {
-            char command[1024];
-            snprintf(command, 1024, "Export[\"%s\", %%]", file.fileName().toStdString().c_str());
-            auto output2 = engine->evalRaw(command);
-            // When the export succeeds, the returned text is the path of the file
-            // We should make it more robust by first expanding them into full path strings
-            if (output2 == file.fileName().toStdString()) {
-                QPixmap pic(file.fileName());
-                m_outputField->setPixmap(pic);
-            } else {
-                m_outputField->setText(QString::fromStdString(output2));
-            }
-        }
-    } else {
+    if (output == "-Graphics-")
+        renderGraphicsOutput();
+    else
         m_outputField->setText(QString::fromStdString(output));
-    }
 
     setId(engine->lastOutputId());
 

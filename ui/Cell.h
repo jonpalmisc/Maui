@@ -30,6 +30,9 @@ class Cell : public QWidget {
     QLabel* m_outputLabel;
     QLabel* m_outputField;
 
+    /// Render graphics output to file and display in the cell.
+    void renderGraphicsOutput();
+
 public:
     Cell(MainWindow* mainWindow, unsigned id = 0, QWidget* parent = nullptr);
 
