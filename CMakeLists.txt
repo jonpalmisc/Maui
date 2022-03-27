@@ -7,9 +7,12 @@ project(Maui VERSION 0.1.0 LANGUAGES C CXX)
 # Allow developers to configure the path to the WSTP API, which will almost
 # always be necessary to build Maui successfully.
 option(WSTP_API_PATH "Path to the WSTP API headers & binaries" "NULL")
-if(NOT ${WSTP_API_PATH} STREQUAL "NULL")
-  include_directories(${WSTP_API_PATH})
-  link_directories(${WSTP_API_PATH})
+
+if (APPLE)
+  find_library(WSTP NAMES wstp PATHS ${WSTP_API_PATH} REQUIRED)
+  include_directories(${WSTP}/Headers)
+else()
+#  TODO: other platforms
 endif()
 
 set(MAUI_CORE_SOURCES
@@ -21,7 +24,7 @@ set(MAUI_CORE_SOURCES
 add_library(MauiCore ${MAUI_CORE_SOURCES})
 target_include_directories(MauiCore PUBLIC include)
 target_compile_features(MauiCore PRIVATE cxx_std_17)
-target_link_libraries(MauiCore PRIVATE WSTPi4)
+target_link_libraries(MauiCore PRIVATE ${WSTP})
 
 # Link to Foundation on macOS
 if(APPLE)
