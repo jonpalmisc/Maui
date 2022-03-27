@@ -1,7 +1,7 @@
 # Maui
 
 Maui is an open source desktop application providing a user interface for the
-free [Wolfram Engine](https://www.wolfram.com/engine/).
+free [Wolfram Engine](https://www.wolfram.com/engine/). It supports both textual and graphical output.
 
 <div align="center">
   <img src="docs/ui.png" width="512">
