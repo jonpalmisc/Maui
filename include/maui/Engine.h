@@ -32,6 +32,9 @@ enum class PacketType : int {
 
     InputName = INPUTNAMEPKT,
     OutputName = OUTPUTNAMEPKT,
+
+    Message = MESSAGEPKT,
+    Text = TEXTPKT,
 };
 
 /// A wrapper over a Wolfram Engine link and environment.

@@ -68,10 +68,24 @@ std::string Engine::eval(const std::string& input)
 
     bool done = false;
     while (!done) {
-        switch (packetType = (PacketType)WSNextPacket(m_link)) {
+        packetType = (PacketType)WSNextPacket(m_link);
+        switch (packetType) {
         case PacketType::ReturnText:
             if (WSGetString(m_link, &rawResult)) {
-                result = std::string(rawResult);
+                // This is a hack to display the error strings without a major refactor.
+                // When there is an error, the result will already be containing the
+                // error string. However, the engine will still somehow give a result.
+                // For example, if we evaluate 1/0, we will get an error message,
+                // followed by ComplexInfinity as its result
+                //				                                 1
+                //                Power::infy: Infinite expression - encountered.
+                //                                                 0
+                //
+                //                ComplexInfinity
+                if (!result.empty())
+                    result += std::string("\n\n") + std::string(rawResult);
+                else
+                    result = std::string(rawResult);
                 WSReleaseString(m_link, rawResult);
             }
 
@@ -97,6 +111,38 @@ std::string Engine::eval(const std::string& input)
         case PacketType::Suspend:
             done = true;
             break;
+
+            //		When there is an error, we will receive a MESSAGEPKT followed by TEXTPKT.
+            //		The MESSAGEPKT will contain a symbol and a message. For example, if the
+            //		error is the following,
+            //		Increment::rvalue:
+            //		   1 is not a variable with a value, so its value cannot be changed.
+
+            //		The symbol will be "Increment", and the message will be "rvalue".
+            //		The text message will be the entire error message (including the Increment::rvalue:
+            //		on the first line).
+            //		Since we only need to display the error message, we ignore the MESSAGEPKT
+        case PacketType::Message: {
+            //		    const char *symbol;
+            //            if (WSGetSymbol(m_link, &symbol))
+            //			{
+            //				result += std::string(symbol);
+            //				WSReleaseSymbol(m_link, symbol);
+            //			}
+            //			if (WSGetString(m_link, &rawResult)) {
+            //				result += std::string(rawResult);
+            //				WSReleaseString(m_link, rawResult);
+            //			}
+            break;
+        }
+
+        case PacketType::Text: {
+            if (WSGetString(m_link, &rawResult)) {
+                result += std::string(rawResult);
+                WSReleaseString(m_link, rawResult);
+            }
+            break;
+        }
 
         // Not sure what produces illegal packets, but maybe their existence
         // should be logged if one is received.
