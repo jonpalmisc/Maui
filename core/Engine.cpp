@@ -172,4 +172,25 @@ std::string Engine::eval(const std::string& input)
     return octalUnescape(result);
 }
 
+std::string Engine::evalRaw(const std::string& input)
+{
+    WSPutFunction(m_link, "EvaluatePacket", 1);
+    WSPutFunction(m_link, "ToExpression", 1);
+    WSPutString(m_link, input.c_str());
+    WSEndPacket(m_link);
+
+    const char* rawResult;
+    std::string result;
+    PacketType packetType = (PacketType)WSNextPacket(m_link);
+    if (packetType != PacketType::Return)
+        return "";
+
+    if (WSGetString(m_link, &rawResult)) {
+        result = std::string(rawResult);
+        WSReleaseString(m_link, rawResult);
+    }
+
+    return octalUnescape(result);
+}
+
 }

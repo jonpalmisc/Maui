@@ -15,6 +15,7 @@
 #include <QGuiApplication>
 #include <QHBoxLayout>
 #include <QMenu>
+#include <QTemporaryFile>
 #include <QToolButton>
 #include <QVBoxLayout>
 
@@ -123,7 +124,26 @@ void Cell::evaluateCurrentInput()
     auto engine = m_mainWindow->engine();
 
     auto output = engine->eval(m_inputField->text().toStdString());
-    m_outputField->setText(QString::fromStdString(output));
+    // test with Plot[Sin[x], {x, 0, Pi}]
+    if (output == "-Graphics-") {
+        QTemporaryFile file("XXXXXX.jpg");
+        file.setAutoRemove(true);
+        if (file.open()) {
+            char command[1024];
+            snprintf(command, 1024, "Export[\"%s\", %%]", file.fileName().toStdString().c_str());
+            auto output2 = engine->evalRaw(command);
+            // When the export succeeds, the returned text is the path of the file
+            // We should make it more robust by first expanding them into full path strings
+            if (output2 == file.fileName().toStdString()) {
+                QPixmap pic(file.fileName());
+                m_outputField->setPixmap(pic);
+            } else {
+                m_outputField->setText(QString::fromStdString(output2));
+            }
+        }
+    } else {
+        m_outputField->setText(QString::fromStdString(output));
+    }
 
     setId(engine->lastOutputId());
 

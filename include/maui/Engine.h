@@ -35,6 +35,8 @@ enum class PacketType : int {
 
     Message = MESSAGEPKT,
     Text = TEXTPKT,
+
+    Return = RETURNPKT,
 };
 
 /// A wrapper over a Wolfram Engine link and environment.
@@ -61,6 +63,13 @@ public:
     ///
     /// \param input The input (Wolfram Language) to evaluate
     std::string eval(const std::string& input);
+
+    /// Evaluate the given input with the engine.
+    /// The evaluation bypasses the (wolfram) kernel's main loop, so it does not update
+    /// the internal input/output history
+    ///
+    /// \param input The input (Wolfram Language) to evaluate
+    std::string evalRaw(const std::string& input);
 
     /// Get the last output cell ID returned from the engine.
     int lastOutputId() const { return m_lastOutputId; }
