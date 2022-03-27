@@ -52,7 +52,12 @@ set(MAUI_SOURCES
   ui/Theme.cpp
 )
 
-qt_add_executable(Maui MANUAL_FINALIZATION ${MAUI_SOURCES})
+if (APPLE)
+  qt_add_executable(Maui MANUAL_FINALIZATION MACOSX_BUNDLE ${MAUI_SOURCES})
+else()
+  qt_add_executable(Maui MANUAL_FINALIZATION ${MAUI_SOURCES})
+
+endif()
 qt_add_resources(Maui "fonts"
   PREFIX "/"
   FILES ui/fonts/Ubuntu-Regular.ttf ui/fonts/UbuntuMono-Regular.ttf)
