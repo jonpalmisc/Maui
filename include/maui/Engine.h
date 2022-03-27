@@ -37,6 +37,8 @@ enum class PacketType : int {
     Text = TEXTPKT,
 
     Return = RETURNPKT,
+
+    Syntax = SYNTAXPKT,
 };
 
 /// A wrapper over a Wolfram Engine link and environment.

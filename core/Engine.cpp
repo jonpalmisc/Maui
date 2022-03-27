@@ -144,6 +144,15 @@ std::string Engine::eval(const std::string& input)
             break;
         }
 
+        case PacketType::Syntax: {
+            if (WSGetString(m_link, &rawResult)) {
+                // This is an integer index of the char at which the syntax error occurs
+                result += std::string("syntax error at char: ") + std::string(rawResult);
+                WSReleaseString(m_link, rawResult);
+            }
+            break;
+        }
+
         // Not sure what produces illegal packets, but maybe their existence
         // should be logged if one is received.
         // Illegal packets are encountered when the engine is not activated
