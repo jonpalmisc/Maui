@@ -20,6 +20,12 @@ std::string octalUnescape(const std::string& input)
     // This is super sketchy and fragile but it's good enough for now.
     for (auto pos = input.begin(), end = input.end(); pos < end; ++pos) {
         if (*pos == '\\') {
+			if (*(pos + 1) == '\\')
+			{
+				result += "\\";
+				pos += 1;
+				continue;
+			}
             std::string octalSequence(pos + 1, pos + 4);
             result += (char)std::stoi(octalSequence, 0, 8);
 
