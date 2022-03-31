@@ -11,6 +11,11 @@ option(WSTP_API_PATH "Path to the WSTP API headers & binaries" "NULL")
 if (APPLE)
   find_library(WSTP NAMES wstp PATHS ${WSTP_API_PATH} REQUIRED)
   include_directories(${WSTP}/Headers)
+elseif (WIN32)
+#  On Windows, we should set WSTP_API_PATH to:
+#  C:\Program Files\Wolfram Research\Wolfram Engine\13.0\SystemFiles\Links\WSTP\DeveloperKit\Windows-x86-64
+  find_library(WSTP NAMES wstp64i4 PATHS ${WSTP_API_PATH}/CompilerAdditions REQUIRED)
+  include_directories(${WSTP_API_PATH}/CompilerAdditions)
 else()
 #  TODO: other platforms
 endif()
@@ -29,6 +34,13 @@ target_link_libraries(MauiCore PRIVATE ${WSTP})
 # Link to Foundation on macOS
 if(APPLE)
   target_link_libraries(MauiCore PRIVATE "-framework Foundation")
+endif()
+
+if (WIN32)
+  add_custom_command(TARGET MauiCore POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E echo "copying wstp64i4.dll"
+    COMMAND ${CMAKE_COMMAND} -E copy ${WSTP_API_PATH}/SystemAdditions/wstp64i4.dll ${CMAKE_BINARY_DIR}
+    )
 endif()
 
 # ===-- User Interface ----------------------------------------------------=== #
