@@ -8,9 +8,7 @@ free [Wolfram Engine](https://www.wolfram.com/engine/). It supports both textual
   <br/>
 </div>
 
-**Warning:** Maui has currently only been tested on macOS (ARM64). It _should_
-  work on other platforms, but I haven't had the time to verify this yet. For
-  more information, see [issue #9](https://github.com/jonpalmisc/Maui/issues/9).
+Maui works macOS, Ubuntu, and Windows.
 
 ## Dependencies
 
