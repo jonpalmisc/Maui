@@ -11,13 +11,13 @@ option(WSTP_API_PATH "Path to the WSTP API headers & binaries" "NULL")
 if (APPLE)
   find_library(WSTP NAMES wstp PATHS ${WSTP_API_PATH} REQUIRED)
   include_directories(${WSTP}/Headers)
-elseif (WIN32)
+else()
 #  On Windows, we should set WSTP_API_PATH to:
 #  C:\Program Files\Wolfram Research\Wolfram Engine\13.0\SystemFiles\Links\WSTP\DeveloperKit\Windows-x86-64
-  find_library(WSTP NAMES wstp64i4 PATHS ${WSTP_API_PATH}/CompilerAdditions REQUIRED)
+#  On Linux, it is:
+#  /usr/local/Wolfram/WolframEngine/13.0/SystemFiles/Links/WSTP/DeveloperKit/Linux-x86-64
+  find_library(WSTP NAMES WSTP64i4 PATHS ${WSTP_API_PATH}/CompilerAdditions REQUIRED)
   include_directories(${WSTP_API_PATH}/CompilerAdditions)
-else()
-#  TODO: other platforms
 endif()
 
 set(MAUI_CORE_SOURCES
