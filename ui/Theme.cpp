@@ -90,7 +90,9 @@ QToolButton::menu-indicator {
 const QFont& Theme::sansFont()
 {
     if (!gSansFontInitialized) {
+#if !defined(__linux__)
         QFontDatabase::addApplicationFont(":ui/fonts/Ubuntu-Regular.ttf");
+#endif
         gSansFont = QFont("Ubuntu", 13);
         gSansFontInitialized = true;
     }
@@ -101,7 +103,9 @@ const QFont& Theme::sansFont()
 const QFont& Theme::monoFont()
 {
     if (!gMonoFontInitialized) {
+#if !defined(__linux__)
         QFontDatabase::addApplicationFont(":ui/fonts/UbuntuMono-Regular.ttf");
+#endif
         gMonoFont = QFont("Ubuntu Mono", 14);
         gMonoFontInitialized = true;
     }
