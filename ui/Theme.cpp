@@ -32,6 +32,8 @@ QColor Theme::color(Theme::Color color)
         return QColor("#C9DFFA");
     case Color::Accent:
         return QColor("#2680EB");
+    default:
+        return QColor("#CACACA");
     }
 }
 
